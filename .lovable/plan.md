@@ -1,57 +1,54 @@
 
-# Skintra — AI Skincare Scanner Prototype
+# Restructure flow: Splash → Dashboard → Products
 
-A multi-screen mobile-first prototype that walks through the full scan-to-verdict loop, styled with glassmorphism, light blue & white palette, Playfair Display Italic for titles and Inter for data.
+## New screen order
 
-## Design System
-- **Palette**: Soft sky-blue gradient backgrounds (#EAF1FB → #FFFFFF), frosted glass cards (white/40 + backdrop-blur), accent blue #4A7BD8, subtle violet glow.
-- **Typography**: Playfair Display Italic for headings ("Today's routine", "Analyze in progress"), Inter for body, labels, percentages.
-- **Components**: Rounded-3xl glass cards, soft shadows, thin borders (white/60), animated rings & pulses, iPhone-style frame for preview.
+```text
+1. Splash (NEW)        →  tap anywhere / Enter
+2. Dashboard (NEW)     →  top-right menu button
+3. Products (existing Home, simplified)
+4. Camera → 5. Processing → 6. Verdict → 7. Alternatives
+```
 
-## Screens & Flow
+Add to `Screen` type: `"splash" | "dashboard"`. Initial screen = `splash`.
 
-**1. Home / Product List**
-- Top bar: avatar "H", "78% Skin Health" pill, bell + grid icons.
-- Greeting "Hello, Helen" + italic title "Your skin routine plan is ready."
-- Three glass stat cards: Sleep 6.5h · Stress Low · Cycle Day 22.
-- Search bar + horizontal category chips (Cleanser, Serum, Moisturizer, SPF, Mask).
-- "My Products" list (3–4 mock items with mini compatibility badges).
-- Prominent bottom CTA: **Scan New Product** → Screen 2.
+## Screen 1 — Splash (`SplashScreen.tsx`, new)
+Aesthetic full-bleed background (soft sky-blue gradient + subtle blurred portrait-style glow, matching the "Beauty Inspired" reference).
+- Centered: **Skintra** in Playfair Display Italic (very large, ~6xl).
+- Below: **Track. Analyze. Glow.** in Inter, tracked-out uppercase, smaller.
+- Bottom: a thin "Enter →" pill button (whole screen also tappable) → `dashboard`.
 
-**2. Camera / Upload**
-- Full-bleed viewfinder mock with corner brackets and a centered product-label frame.
-- Helper text "Position label inside the frame".
-- Two buttons: **Take Photo** / **Upload from Gallery**.
-- After tap → glass modal "Is the image clear?" with **Retake** (→ reset) or **Yes, analyze** (→ Screen 3).
+## Screen 2 — Dashboard (`DashboardScreen.tsx`, new)
+Mirrors the reference (image-3.png):
+- Top bar: avatar "H" + "78% Skin Health" pill on left; bell + **grid menu button** on right.
+- Greeting "Hello, Helen" + italic "Your *skin routine plan* is ready."
+- 3 stat cards: Sleep 6.5h · Stress Low · Cycle Day 22.
+- Large glass card "SKINTRA — Today's routine" with "Read Plan" chip, 0/4 Steps grid (4 mini icon tiles), and Skin Health 78% mini ring (+4% this week).
+- Bottom CTA: **Start AI Scan** → `camera`.
+- **Top-right grid icon** opens a small glass dropdown menu: *My Products*, *Scan*, *Home* → navigate to `home` / `camera` / `splash`.
 
-**3. AI Processing**
-- Blurred home background, centered animated face-mesh ring with pulsing core.
-- Sequential status lines fading in:
-  - "AI is analyzing ingredients…"
-  - "Syncing with your Health Data (Sleep · Stress · Cycle)…"
-  - "Cross-checking with your skin profile…"
-- Auto-advances to Screen 4 after ~2.5s.
+## Screen 3 — Products (existing `HomeScreen.tsx`, simplified)
+Remove:
+- "Hello, Helen" + "Your skin routine plan is ready." block.
+- Three Sleep/Stress/Cycle stat cards.
 
-**4. Product Verdict**
-- Italic title "Today's Skintra verdict".
-- Large circular progress with **Compatibility Score** (e.g., 85%).
-- Status pill: **Need it** or **Don't need it** (randomized/scenario-driven).
-- Three info chips: Hydration, Sensitivity, Barrier impact.
-- Sections: **Irritation & Comedogenic risks**, **Usage Guidelines** (morning/night, frequency).
-- Primary button **Add to My Routine** → confirm prompt "Want to add to routine?" → Yes returns to Screen 1 with toast "Added to routine".
-- Secondary link **See Alternatives** (always visible; emphasized when score < 70) → Screen 5.
+Keep: top bar (add a back arrow → `dashboard`), italic title **"My Products"**, search bar, category chips, products list, bottom **Scan New Product** CTA.
 
-**5. Alternatives**
-- Italic title "Better matches for you".
-- Curated list (3–4 cards) with name, match %, key benefit tags tied to user's sleep/stress/cycle.
-- Each card → tap shows quick detail sheet with **Add to Routine** (→ Screen 1).
-- Bottom decision card "Found an alternative?" with **Yes, done** (→ Screen 1) and **No** → secondary prompt "Scan more items?" → **Scan more** (→ Screen 2) or **Finish** (→ Screen 1).
+## Remove all scrollbars (mobile feel)
+- Add a global `.scrollbar-hide` rule in `src/index.css` (already used inline) and apply `overflow-y: auto; scrollbar-width: none;` + `::-webkit-scrollbar { display: none; }` to:
+  - `PhoneFrame` inner scroll container
+  - any horizontal chip rows
+- Hide visible scrollbars across all screens while keeping scroll functional.
 
-## Interaction & State
-- Single-page app with in-memory router (screen state) — no URL routing needed for the demo loop.
-- Mock "My Routine" list updates when products are added; toast confirmations via Sonner.
-- All transitions animated (fade/slide) for a polished feel.
-- Mobile frame wrapper on desktop so the prototype feels like a phone preview; full-screen on small viewports.
+## Wiring (`src/pages/Index.tsx`)
+- Initial state: `screen = "splash"`.
+- Routes:
+  - splash → dashboard
+  - dashboard → camera (Start AI Scan), or via menu → home / splash
+  - home (Products) → camera (Scan New Product), back → dashboard
+  - camera → processing → verdict → (add → dashboard) / (alternatives → … → dashboard or camera)
+- After "Add to routine" / "Finish" loops, return to **dashboard** instead of products list (products list reachable via menu).
 
-## Out of Scope
-- Real camera access, real AI calls, authentication, persistence across reloads.
+## Files
+- **New**: `src/skintra/SplashScreen.tsx`, `src/skintra/DashboardScreen.tsx`
+- **Edit**: `src/skintra/types.ts` (extend `Screen`), `src/pages/Index.tsx` (router + initial), `src/skintra/HomeScreen.tsx` (strip greeting + stats, add back nav), `src/index.css` (global scrollbar-hide), `src/skintra/PhoneFrame.tsx` (apply scrollbar-hide)
