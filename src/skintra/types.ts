@@ -1,4 +1,4 @@
-export type Screen = "home" | "camera" | "processing" | "verdict" | "alternatives";
+export type Screen = "splash" | "dashboard" | "home" | "camera" | "processing" | "verdict" | "alternatives";
 
 export type Product = {
   id: string;

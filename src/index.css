@@ -128,4 +128,11 @@
   .glow-bg {
     background-image: var(--gradient-glow);
   }
+  .scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
 }
