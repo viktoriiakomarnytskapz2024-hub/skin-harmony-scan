@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { ArrowLeft, Sun, Moon, AlertTriangle, Check, X } from "lucide-react";
+import { ArrowLeft, ChevronDown, Droplet, Sparkles, Shield, Sun, Moon, Snowflake, AlertTriangle } from "lucide-react";
 import { Product } from "./types";
 
 const RING_R = 70;
@@ -18,36 +18,39 @@ export const VerdictScreen = ({
 }) => {
   const [confirm, setConfirm] = useState(false);
   const [progress, setProgress] = useState(0);
+  const [open, setOpen] = useState(false);
 
   useEffect(() => {
     const t = setTimeout(() => setProgress(product.match), 100);
     return () => clearTimeout(t);
   }, [product.match]);
 
-  const needIt = product.match >= 70;
   const offset = RING_C - (progress / 100) * RING_C;
 
   return (
     <div className="min-h-full glow-bg pb-10">
-      <div className="px-5 pt-12 flex items-center justify-between">
-        <button onClick={onBack} className="w-10 h-10 rounded-full glass flex items-center justify-center">
+      <div className="px-5 pt-12 flex items-center justify-between animate-fade-in">
+        <button onClick={onBack} className="w-10 h-10 rounded-full glass flex items-center justify-center text-foreground/70">
           <ArrowLeft className="w-4 h-4" />
         </button>
-        <p className="text-xs text-muted-foreground">Today's verdict</p>
+        <div className="glass rounded-full px-3 py-1.5 text-xs font-medium text-foreground/80">
+          Today's verdict
+        </div>
         <div className="w-10" />
       </div>
 
-      <div className="px-6 mt-3 animate-fade-in">
-        <h1 className="font-display text-3xl text-foreground leading-tight">
-          Today's Skintra<br />verdict
+      <div className="text-center mt-5 px-6 animate-slide-up">
+        <p className="text-xs uppercase tracking-[0.3em] text-muted-foreground">Scan complete</p>
+        <h1 className="font-display text-3xl text-foreground leading-tight mt-2">
+          Today's Skintra<br />adjustment
         </h1>
-        <p className="text-sm text-muted-foreground mt-1">{product.brand} · {product.name}</p>
+        <p className="text-xs text-muted-foreground mt-2">{product.brand} · {product.name}</p>
       </div>
 
       <div className="mt-6 flex flex-col items-center animate-scale-in">
         <div className="relative w-44 h-44">
           <svg className="w-full h-full -rotate-90" viewBox="0 0 160 160">
-            <circle cx="80" cy="80" r={RING_R} stroke="hsl(var(--border))" strokeWidth="10" fill="none" />
+            <circle cx="80" cy="80" r={RING_R} stroke="hsl(0 0% 100% / 0.7)" strokeWidth="10" fill="none" />
             <circle
               cx="80" cy="80" r={RING_R}
               stroke="url(#grad)"
@@ -63,89 +66,105 @@ export const VerdictScreen = ({
               </linearGradient>
             </defs>
           </svg>
-          <div className="absolute inset-0 flex flex-col items-center justify-center">
-            <span className="text-4xl font-bold text-foreground">{product.match}%</span>
-            <span className="text-[10px] uppercase tracking-widest text-muted-foreground mt-1">Match</span>
+          <div className="absolute inset-0 flex items-center justify-center">
+            <span className="text-4xl font-bold text-foreground">{product.match}<span className="text-xl font-medium">%</span></span>
           </div>
-        </div>
-
-        <div
-          className={`mt-4 px-4 py-1.5 rounded-full text-xs font-semibold flex items-center gap-1.5 ${
-            needIt ? "bg-success/15 text-success" : "bg-destructive/15 text-destructive"
-          }`}
-        >
-          {needIt ? <Check className="w-3.5 h-3.5" /> : <X className="w-3.5 h-3.5" />}
-          {needIt ? "Need it" : "Don't need it"}
         </div>
       </div>
 
+      {/* metric pills */}
       <div className="mt-6 px-5 grid grid-cols-3 gap-2">
         {[
-          { label: "Hydration", value: "+High" },
-          { label: "Sensitivity", value: "Low" },
-          { label: "Barrier", value: "Boost" },
+          { icon: Droplet, label: "Hydration", value: "good" },
+          { icon: Sparkles, label: "Sensitivity", value: "mild" },
+          { icon: Shield, label: "Barrier", value: "stable" },
         ].map((c) => (
-          <div key={c.label} className="glass rounded-2xl p-3 text-center">
-            <p className="text-[10px] uppercase tracking-wider text-muted-foreground">{c.label}</p>
-            <p className="text-sm font-semibold text-foreground mt-0.5">{c.value}</p>
+          <div key={c.label} className="glass rounded-2xl p-3">
+            <div className="flex items-center gap-1.5 text-foreground/70">
+              <c.icon className="w-3 h-3 text-primary" />
+              <p className="text-[10px] tracking-wide">{c.label}:</p>
+            </div>
+            <p className="text-sm font-semibold text-foreground mt-1">{c.value}</p>
           </div>
         ))}
       </div>
 
-      <div className="mt-5 px-5 space-y-3">
-        <div className="glass rounded-3xl p-4">
-          <div className="flex items-center gap-2">
-            <AlertTriangle className="w-4 h-4 text-warning" />
-            <h3 className="text-sm font-semibold text-foreground">Irritation & Comedogenic risks</h3>
-          </div>
-          <p className="text-xs text-muted-foreground mt-2 leading-relaxed">
-            Contains fragrance (low irritation). Comedogenic rating 1/5 — safe for combination skin during cycle day 22.
-          </p>
-        </div>
-
-        <div className="glass rounded-3xl p-4">
-          <h3 className="text-sm font-semibold text-foreground">Usage Guidelines</h3>
-          <div className="mt-3 grid grid-cols-2 gap-2">
-            <div className="rounded-2xl bg-white/40 p-3 flex items-center gap-2">
-              <Sun className="w-4 h-4 text-warning" />
-              <div>
-                <p className="text-[10px] text-muted-foreground">Morning</p>
-                <p className="text-xs font-medium text-foreground">Daily</p>
-              </div>
-            </div>
-            <div className="rounded-2xl bg-white/40 p-3 flex items-center gap-2">
-              <Moon className="w-4 h-4 text-primary" />
-              <div>
-                <p className="text-[10px] text-muted-foreground">Night</p>
-                <p className="text-xs font-medium text-foreground">3× / week</p>
-              </div>
+      {/* adjustments */}
+      <div className="mt-3 px-5 grid grid-cols-3 gap-2">
+        {[
+          { icon: Droplet, label: "Boost", sub: "hydration" },
+          { icon: Snowflake, label: "Calm", sub: "redness" },
+          { icon: Moon, label: "Night", sub: "repair" },
+        ].map((c) => (
+          <div key={c.label} className="glass rounded-2xl p-3 flex flex-col items-start gap-1.5">
+            <span className="w-7 h-7 rounded-lg bg-primary/10 text-primary flex items-center justify-center">
+              <c.icon className="w-3.5 h-3.5" />
+            </span>
+            <div>
+              <p className="text-xs font-semibold text-foreground leading-tight">{c.label}</p>
+              <p className="text-[10px] text-muted-foreground">{c.sub}</p>
             </div>
           </div>
-        </div>
+        ))}
       </div>
 
-      <div className="mt-6 px-5 space-y-2">
+      {/* details collapsible */}
+      <div className="mt-4 px-5">
+        <button
+          onClick={() => setOpen((v) => !v)}
+          className="w-full glass rounded-2xl px-4 py-3 flex items-center justify-between text-sm font-medium text-foreground"
+        >
+          <span className="flex items-center gap-2">
+            <AlertTriangle className="w-4 h-4 text-warning" />
+            Risks & Usage
+          </span>
+          <ChevronDown className={`w-4 h-4 transition-transform ${open ? "rotate-180" : ""}`} />
+        </button>
+        {open && (
+          <div className="mt-2 glass rounded-2xl p-4 space-y-3 animate-fade-in">
+            <p className="text-xs text-muted-foreground leading-relaxed">
+              Contains fragrance (low irritation). Comedogenic 1/5 — safe for combination skin during cycle day 22.
+            </p>
+            <div className="grid grid-cols-2 gap-2">
+              <div className="glass-inner p-2.5 flex items-center gap-2">
+                <Sun className="w-4 h-4 text-warning" />
+                <div>
+                  <p className="text-[10px] text-muted-foreground">Morning</p>
+                  <p className="text-xs font-medium text-foreground">Daily</p>
+                </div>
+              </div>
+              <div className="glass-inner p-2.5 flex items-center gap-2">
+                <Moon className="w-4 h-4 text-primary" />
+                <div>
+                  <p className="text-[10px] text-muted-foreground">Night</p>
+                  <p className="text-xs font-medium text-foreground">3× / week</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
+      </div>
+
+      <div className="mt-5 px-5 space-y-2">
         <button
           onClick={() => setConfirm(true)}
           className="w-full h-14 rounded-full text-primary-foreground font-semibold shadow-[0_10px_30px_-8px_hsl(218_60%_50%/0.5)] active:scale-[0.98] transition"
           style={{ background: "var(--gradient-primary)" }}
         >
-          Add to My Routine
+          View routine
         </button>
         <button
           onClick={onAlternatives}
-          className={`w-full h-12 rounded-full font-medium ${
-            needIt ? "text-foreground/70 underline underline-offset-4" : "glass text-foreground"
-          }`}
+          className="w-full h-12 rounded-full glass text-foreground font-medium"
         >
           See Alternatives
         </button>
       </div>
 
       {confirm && (
-        <div className="absolute inset-0 z-20 bg-black/30 backdrop-blur-sm flex items-end sm:items-center justify-center p-5 animate-fade-in">
+        <div className="absolute inset-0 z-20 bg-foreground/10 backdrop-blur-sm flex items-end sm:items-center justify-center p-5 animate-fade-in">
           <div className="w-full glass rounded-3xl p-6 animate-scale-in">
-            <h3 className="font-display text-2xl text-foreground">Want to add to routine?</h3>
+            <h3 className="font-display text-2xl text-foreground">Add to routine?</h3>
             <p className="text-sm text-muted-foreground mt-1">
               {product.name} will appear in your daily routine.
             </p>
