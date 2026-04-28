@@ -11,7 +11,6 @@ import {
   Home as HomeIcon,
   Sun,
   FlaskConical,
-  Snowflake,
 } from "lucide-react";
 
 const RING_R = 28;
