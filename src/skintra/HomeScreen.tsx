@@ -51,7 +51,7 @@ export const HomeScreen = ({
             key={c}
             className={`shrink-0 px-4 py-2 rounded-full text-xs font-medium transition ${
               i === 0
-                ? "bg-foreground text-background"
+                ? "bg-primary/90 text-primary-foreground shadow-[0_6px_20px_-8px_hsl(218_60%_50%/0.6)]"
                 : "glass text-foreground/70 hover:text-foreground"
             }`}
           >
