@@ -11,7 +11,6 @@ import {
   Home as HomeIcon,
   Sun,
   FlaskConical,
-  Snowflake,
 } from "lucide-react";
 
 const RING_R = 28;
@@ -116,7 +115,9 @@ export const DashboardScreen = ({
         <div className="glass rounded-3xl p-5">
           <div className="flex items-start justify-between">
             <div>
-              <p className="text-[10px] tracking-[0.3em] uppercase text-foreground/60">SKINTRA</p>
+              <span className="inline-flex items-center gap-1 glass-soft rounded-full px-2.5 py-1 text-[10px] font-medium text-foreground/70">
+                24 DEC
+              </span>
               <h2 className="font-display text-2xl text-foreground leading-tight mt-1">
                 Today's<br />routine
               </h2>
@@ -128,7 +129,7 @@ export const DashboardScreen = ({
 
           <div className="mt-4 grid grid-cols-2 gap-3">
             {/* Steps */}
-            <div className="rounded-2xl bg-white/40 border border-white/60 p-3">
+            <div className="glass-inner p-3">
               <p className="text-[11px] text-muted-foreground mb-2">0/4 Steps</p>
               <div className="grid grid-cols-2 gap-1.5">
                 {[Droplet, Sparkles, FlaskConical, Sun].map((Icon, i) => (
@@ -143,7 +144,7 @@ export const DashboardScreen = ({
             </div>
 
             {/* Skin Health ring */}
-            <div className="rounded-2xl bg-white/40 border border-white/60 p-3 flex flex-col items-center justify-center">
+            <div className="glass-inner p-3 flex flex-col items-center justify-center">
               <p className="text-[11px] text-muted-foreground self-start">Skin Health</p>
               <div className="relative w-20 h-20 mt-1">
                 <svg className="w-full h-full -rotate-90" viewBox="0 0 64 64">
