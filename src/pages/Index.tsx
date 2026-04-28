@@ -1,6 +1,8 @@
 import { useMemo, useState } from "react";
 import { toast } from "sonner";
 import { PhoneFrame } from "@/skintra/PhoneFrame";
+import { SplashScreen } from "@/skintra/SplashScreen";
+import { DashboardScreen } from "@/skintra/DashboardScreen";
 import { HomeScreen } from "@/skintra/HomeScreen";
 import { CameraScreen } from "@/skintra/CameraScreen";
 import { ProcessingScreen } from "@/skintra/ProcessingScreen";
@@ -21,29 +23,39 @@ const STARTER: Product[] = [
 ];
 
 const Index = () => {
-  const [screen, setScreen] = useState<Screen>("home");
+  const [screen, setScreen] = useState<Screen>("splash");
   const [routine, setRoutine] = useState<Product[]>(STARTER);
   const [scanIndex, setScanIndex] = useState(0);
 
   const currentScan = useMemo(() => SAMPLE_SCAN[scanIndex % SAMPLE_SCAN.length], [scanIndex]);
 
-  const goHome = () => setScreen("home");
+  const goDashboard = () => setScreen("dashboard");
   const startScan = () => setScreen("camera");
 
   const addToRoutine = (p: Product) => {
     setRoutine((r) => [{ ...p, id: p.id + "-" + Date.now() }, ...r]);
     toast.success("Added to routine", { description: p.name });
-    goHome();
+    goDashboard();
   };
 
   return (
     <PhoneFrame>
+      {screen === "splash" && (
+        <SplashScreen onEnter={() => setScreen("dashboard")} />
+      )}
+      {screen === "dashboard" && (
+        <DashboardScreen
+          onScan={startScan}
+          onOpenProducts={() => setScreen("home")}
+          onOpenSplash={() => setScreen("splash")}
+        />
+      )}
       {screen === "home" && (
-        <HomeScreen routine={routine} onScan={startScan} />
+        <HomeScreen routine={routine} onScan={startScan} onBack={goDashboard} />
       )}
       {screen === "camera" && (
         <CameraScreen
-          onBack={goHome}
+          onBack={goDashboard}
           onConfirm={() => setScreen("processing")}
         />
       )}
@@ -53,7 +65,7 @@ const Index = () => {
       {screen === "verdict" && (
         <VerdictScreen
           product={currentScan}
-          onBack={goHome}
+          onBack={goDashboard}
           onAdd={() => { addToRoutine(currentScan); setScanIndex((i) => i + 1); }}
           onAlternatives={() => setScreen("alternatives")}
         />
@@ -63,7 +75,7 @@ const Index = () => {
           onBack={() => setScreen("verdict")}
           onAdd={(p) => { addToRoutine(p); setScanIndex((i) => i + 1); }}
           onScanMore={() => { setScanIndex((i) => i + 1); setScreen("camera"); }}
-          onFinish={() => { setScanIndex((i) => i + 1); goHome(); }}
+          onFinish={() => { setScanIndex((i) => i + 1); goDashboard(); }}
         />
       )}
     </PhoneFrame>
