@@ -1,4 +1,4 @@
-import { Bell, Grid3x3, Search, ScanLine, Sparkles, Droplet, Sun, Moon } from "lucide-react";
+import { Bell, Search, ScanLine, Sparkles, ArrowLeft } from "lucide-react";
 import { Product } from "./types";
 
 const categories = ["All", "Cleanser", "Serum", "Moisturizer", "SPF", "Mask"];
@@ -6,54 +6,36 @@ const categories = ["All", "Cleanser", "Serum", "Moisturizer", "SPF", "Mask"];
 export const HomeScreen = ({
   routine,
   onScan,
+  onBack,
 }: {
   routine: Product[];
   onScan: () => void;
+  onBack: () => void;
 }) => {
   return (
     <div className="min-h-full glow-bg pb-28">
       <div className="px-5 pt-12 pb-4 flex items-center justify-between animate-fade-in">
-        <div className="flex items-center gap-3">
-          <div className="w-10 h-10 rounded-full bg-gradient-to-br from-primary to-primary-glow text-primary-foreground flex items-center justify-center font-semibold shadow-lg">
-            H
-          </div>
-          <div className="glass rounded-full px-3 py-1.5 text-xs font-medium text-foreground/80 flex items-center gap-1.5">
-            <Sparkles className="w-3 h-3 text-primary" />
-            78% Skin Health
-          </div>
+        <button
+          onClick={onBack}
+          className="w-10 h-10 rounded-full glass flex items-center justify-center text-foreground/70"
+        >
+          <ArrowLeft className="w-4 h-4" />
+        </button>
+        <div className="glass rounded-full px-3 py-1.5 text-xs font-medium text-foreground/80 flex items-center gap-1.5">
+          <Sparkles className="w-3 h-3 text-primary" />
+          My Routine
         </div>
-        <div className="flex items-center gap-2">
-          <button className="w-10 h-10 rounded-full glass flex items-center justify-center text-foreground/70">
-            <Bell className="w-4 h-4" />
-          </button>
-          <button className="w-10 h-10 rounded-full glass flex items-center justify-center text-foreground/70">
-            <Grid3x3 className="w-4 h-4" />
-          </button>
-        </div>
+        <div className="w-10" />
       </div>
 
       <div className="px-5 mt-2 animate-slide-up">
-        <p className="text-sm text-muted-foreground">Hello, Helen</p>
         <h1 className="font-display text-3xl leading-tight text-foreground mt-1">
-          Your skin routine<br />plan is ready.
+          My Products
         </h1>
+        <p className="text-sm text-muted-foreground mt-1">Everything in your current routine.</p>
       </div>
 
-      <div className="px-5 mt-5 grid grid-cols-3 gap-2.5 animate-slide-up">
-        {[
-          { icon: Moon, label: "Sleep", value: "6.5h" },
-          { icon: Sparkles, label: "Stress", value: "Low" },
-          { icon: Droplet, label: "Cycle", value: "Day 22" },
-        ].map((s) => (
-          <div key={s.label} className="glass rounded-2xl p-3 flex flex-col items-start gap-1">
-            <s.icon className="w-4 h-4 text-primary" />
-            <p className="text-[10px] text-muted-foreground uppercase tracking-wider">{s.label}</p>
-            <p className="text-sm font-semibold text-foreground">{s.value}</p>
-          </div>
-        ))}
-      </div>
-
-      <div className="px-5 mt-6 animate-fade-in">
+      <div className="px-5 mt-5 animate-fade-in">
         <div className="glass rounded-full flex items-center gap-2 px-4 py-3">
           <Search className="w-4 h-4 text-muted-foreground" />
           <input
@@ -63,7 +45,7 @@ export const HomeScreen = ({
         </div>
       </div>
 
-      <div className="mt-5 px-5 flex gap-2 overflow-x-auto pb-2 scrollbar-hide">
+      <div className="mt-4 px-5 flex gap-2 overflow-x-auto pb-2 scrollbar-hide">
         {categories.map((c, i) => (
           <button
             key={c}
@@ -78,8 +60,8 @@ export const HomeScreen = ({
         ))}
       </div>
 
-      <div className="px-5 mt-6 flex items-center justify-between">
-        <h2 className="font-display text-xl text-foreground">My Products</h2>
+      <div className="px-5 mt-5 flex items-center justify-between">
+        <h2 className="font-display text-xl text-foreground">In your routine</h2>
         <span className="text-xs text-muted-foreground">{routine.length} items</span>
       </div>
 
