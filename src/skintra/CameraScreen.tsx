@@ -30,15 +30,15 @@ export const CameraScreen = ({
 
       {/* Caption */}
       <div className="relative z-10 mt-6 text-center px-6 animate-slide-up">
-        <p className="text-xs uppercase tracking-[0.3em] text-muted-foreground">Position face</p>
+        <p className="text-xs uppercase tracking-[0.3em] text-muted-foreground">Position product label</p>
         <h1 className="font-display text-3xl text-foreground mt-2 leading-tight">
           Scan in progress
         </h1>
       </div>
 
-      {/* Sphere with corner brackets */}
+      {/* OCR focus frame */}
       <div className="relative z-10 mt-6 px-8 flex flex-col items-center">
-        <div className="relative w-72 h-72 max-w-[78%]">
+        <div className="relative w-60 h-72 max-w-[72%]">
           {/* Corner brackets */}
           {[
             "top-0 left-0 border-t-2 border-l-2 rounded-tl-2xl",
@@ -49,57 +49,27 @@ export const CameraScreen = ({
             <span key={i} className={`absolute w-10 h-10 border-primary/60 ${c}`} />
           ))}
 
-          {/* Mesh sphere */}
-          <div className="absolute inset-6 rounded-full overflow-hidden">
-            <div
-              className="absolute inset-0 rounded-full"
-              style={{
-                background:
-                  "radial-gradient(circle at 35% 30%, hsl(0 0% 100% / 0.9), hsl(214 60% 92% / 0.6) 50%, hsl(218 60% 80% / 0.3) 80%)",
-              }}
-            />
-            {/* dotted mesh */}
-            <svg className="absolute inset-0 w-full h-full opacity-60" viewBox="0 0 100 100">
-              <defs>
-                <radialGradient id="fade" cx="50%" cy="50%" r="50%">
-                  <stop offset="60%" stopColor="hsl(218 60% 55%)" stopOpacity="0.6" />
-                  <stop offset="100%" stopColor="hsl(218 60% 55%)" stopOpacity="0" />
-                </radialGradient>
-                <pattern id="dots" x="0" y="0" width="4" height="4" patternUnits="userSpaceOnUse">
-                  <circle cx="1" cy="1" r="0.5" fill="url(#fade)" />
-                </pattern>
-              </defs>
-              <circle cx="50" cy="50" r="48" fill="url(#dots)" />
-              {/* meridians */}
-              {[20, 35, 50, 65, 80].map((cx) => (
-                <ellipse
-                  key={cx}
-                  cx="50"
-                  cy="50"
-                  rx={Math.abs(50 - cx) || 4}
-                  ry="46"
-                  fill="none"
-                  stroke="hsl(218 60% 55%)"
-                  strokeOpacity="0.18"
-                  strokeWidth="0.4"
+          {/* Frame interior */}
+          <div className="absolute inset-4 rounded-2xl overflow-hidden glass-soft">
+            {/* viewfinder grid */}
+            <div className="absolute inset-0 pointer-events-none">
+              <span className="absolute top-1/3 left-0 right-0 h-px bg-primary/15" />
+              <span className="absolute top-2/3 left-0 right-0 h-px bg-primary/15" />
+              <span className="absolute left-1/3 top-0 bottom-0 w-px bg-primary/15" />
+              <span className="absolute left-2/3 top-0 bottom-0 w-px bg-primary/15" />
+            </div>
+            {/* faint ingredient skeleton lines */}
+            <div className="absolute inset-0 px-5 py-6 flex flex-col justify-center gap-2.5">
+              {[85, 70, 92, 60, 78].map((w, i) => (
+                <span
+                  key={i}
+                  className="h-1.5 rounded-full bg-foreground/15"
+                  style={{ width: `${w}%` }}
                 />
               ))}
-              {[20, 35, 50, 65, 80].map((cy) => (
-                <ellipse
-                  key={cy}
-                  cx="50"
-                  cy="50"
-                  rx="46"
-                  ry={Math.abs(50 - cy) || 4}
-                  fill="none"
-                  stroke="hsl(218 60% 55%)"
-                  strokeOpacity="0.18"
-                  strokeWidth="0.4"
-                />
-              ))}
-            </svg>
-            {/* rotating ring */}
-            <span className="absolute inset-2 rounded-full border-2 border-primary/30 border-t-transparent border-r-transparent animate-spin-slow" />
+            </div>
+            {/* sweeping scan line */}
+            <div className="absolute inset-x-2 top-0 h-1 rounded-full bg-gradient-to-r from-transparent via-primary to-transparent shadow-[0_0_18px_2px_hsl(var(--primary)/0.6)] animate-scan-sweep" />
           </div>
 
           {/* Center scan button */}
@@ -161,22 +131,20 @@ export const CameraScreen = ({
       {/* Confirm modal */}
       {showModal && (
         <div className="absolute inset-0 z-20 bg-foreground/10 backdrop-blur-sm flex items-end sm:items-center justify-center p-5 animate-fade-in">
-          <div className="w-full glass rounded-3xl p-6 text-foreground animate-scale-in">
-            <div className="flex items-start justify-between">
-              <div>
-                <h3 className="font-display text-2xl">Is the image clear?</h3>
-                <p className="text-sm text-muted-foreground mt-1">
-                  We'll analyze the ingredients list. Make sure the label is sharp and fully visible.
-                </p>
-              </div>
-              <button onClick={() => setShowModal(false)} className="p-1 text-muted-foreground">
-                <X className="w-4 h-4" />
-              </button>
+          <div className="w-full glass rounded-3xl p-6 text-foreground animate-scale-in relative">
+            <button
+              onClick={() => setShowModal(false)}
+              className="absolute top-4 right-4 p-1 text-muted-foreground"
+            >
+              <X className="w-4 h-4" />
+            </button>
+            <div className="py-10 flex flex-col items-center text-center">
+              <h3 className="font-display text-2xl">Is the image clear?</h3>
+              <p className="text-sm text-muted-foreground mt-3 max-w-[18rem]">
+                We'll analyze the ingredients list. Make sure the label is sharp and fully visible.
+              </p>
             </div>
-            <div className="mt-5 aspect-video glass-inner flex items-center justify-center text-4xl">
-              🧴
-            </div>
-            <div className="mt-5 grid grid-cols-2 gap-2.5">
+            <div className="grid grid-cols-2 gap-2.5">
               <button
                 onClick={() => setShowModal(false)}
                 className="h-12 rounded-full glass-soft text-foreground font-medium"

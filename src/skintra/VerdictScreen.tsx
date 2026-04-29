@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { ArrowLeft, ChevronDown, Droplet, Sparkles, Shield, Sun, Moon, Snowflake, AlertTriangle } from "lucide-react";
+import { ArrowLeft, ChevronDown, Droplet, Sparkles, Zap, Sun, Moon, Layers, Ban, AlertTriangle, Clock } from "lucide-react";
 import { Product } from "./types";
 
 const RING_R = 70;
@@ -34,7 +34,7 @@ export const VerdictScreen = ({
           <ArrowLeft className="w-4 h-4" />
         </button>
         <div className="glass rounded-full px-3 py-1.5 text-xs font-medium text-foreground/80">
-          Today's verdict
+          Product match
         </div>
         <div className="w-10" />
       </div>
@@ -70,14 +70,15 @@ export const VerdictScreen = ({
             <span className="text-4xl font-bold text-foreground">{product.match}<span className="text-xl font-medium">%</span></span>
           </div>
         </div>
+        <p className="text-[11px] text-muted-foreground mt-2">Product match for your profile</p>
       </div>
 
       {/* metric pills */}
       <div className="mt-6 px-5 grid grid-cols-3 gap-2">
         {[
-          { icon: Droplet, label: "Hydration", value: "good" },
-          { icon: Sparkles, label: "Sensitivity", value: "mild" },
-          { icon: Shield, label: "Barrier", value: "stable" },
+          { icon: Droplet, label: "Hydrating", value: "high" },
+          { icon: Sparkles, label: "Soothing", value: "medium" },
+          { icon: Zap, label: "Active", value: "10%" },
         ].map((c) => (
           <div key={c.label} className="glass rounded-2xl p-3">
             <div className="flex items-center gap-1.5 text-foreground/70">
@@ -92,9 +93,9 @@ export const VerdictScreen = ({
       {/* adjustments */}
       <div className="mt-3 px-5 grid grid-cols-3 gap-2">
         {[
-          { icon: Droplet, label: "Boost", sub: "hydration" },
-          { icon: Snowflake, label: "Calm", sub: "redness" },
-          { icon: Moon, label: "Night", sub: "repair" },
+          { icon: Clock, label: "Apply", sub: "AM + PM" },
+          { icon: Layers, label: "Pair with", sub: "moisturizer" },
+          { icon: Ban, label: "Avoid", sub: "strong acids" },
         ].map((c) => (
           <div key={c.label} className="glass rounded-2xl p-3 flex flex-col items-start gap-1.5">
             <span className="w-7 h-7 rounded-lg bg-primary/10 text-primary flex items-center justify-center">
