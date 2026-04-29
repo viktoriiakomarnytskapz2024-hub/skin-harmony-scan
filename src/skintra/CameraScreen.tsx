@@ -131,7 +131,7 @@ export const CameraScreen = ({
       {/* Confirm modal */}
       {showModal && (
         <div className="absolute inset-0 z-20 bg-foreground/10 backdrop-blur-sm flex items-end sm:items-center justify-center p-5 animate-fade-in">
-          <div className="w-full rounded-3xl p-8 sm:p-10 text-center bg-white/90 backdrop-blur-xl border border-white/80 shadow-[0_20px_60px_-20px_hsl(218_40%_30%/0.25)] animate-scale-in relative">
+          <div className="w-full rounded-3xl p-8 sm:p-10 text-center glass-modal animate-scale-in relative">
             <button
               onClick={() => setShowModal(false)}
               className="absolute top-4 right-4 p-1 text-[hsl(220_30%_40%)] hover:text-[hsl(220_45%_18%)]"
@@ -139,21 +139,21 @@ export const CameraScreen = ({
               <X className="w-4 h-4" />
             </button>
             <div className="py-6 flex flex-col items-center text-center">
-              <h3 className="font-sans font-semibold text-2xl tracking-tight text-[hsl(220_45%_18%)]">Is the image clear?</h3>
-              <p className="text-sm font-medium text-[hsl(220_25%_35%)] mt-3 max-w-[20rem] mx-auto">
+              <h3 className="font-display text-3xl text-[hsl(220_45%_18%)]">Is the image clear?</h3>
+              <p className="font-editorial text-base text-[hsl(220_30%_25%)] mt-3 max-w-[20rem] mx-auto">
                 We'll analyze the ingredients list. Make sure the label is sharp and fully visible.
               </p>
             </div>
             <div className="mt-8 grid grid-cols-2 gap-3">
               <button
                 onClick={() => setShowModal(false)}
-                className="h-12 rounded-full bg-[hsl(214_45%_94%)] hover:bg-[hsl(214_45%_90%)] text-[hsl(220_45%_22%)] font-semibold border border-[hsl(214_35%_86%)] transition-colors"
+                className="h-12 rounded-full bg-white/40 hover:bg-white/55 text-[hsl(220_45%_22%)] font-ui font-semibold border border-white/60 backdrop-blur-md transition-colors"
               >
                 Retake
               </button>
               <button
                 onClick={onConfirm}
-                className="h-12 rounded-full text-white font-bold shadow-[0_8px_20px_-6px_hsl(218_60%_50%/0.45)]"
+                className="h-12 rounded-full text-white font-ui font-bold shadow-[0_8px_20px_-6px_hsl(218_60%_50%/0.45)]"
                 style={{ background: "var(--gradient-primary)" }}
               >
                 Yes, analyze
