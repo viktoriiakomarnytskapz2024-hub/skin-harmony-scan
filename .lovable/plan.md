@@ -1,59 +1,37 @@
-# Refocus on Product Ingredient Scanning (OCR)
+# Modal Restyle — "Is the image clear?" & "Scan more items?"
 
-Shift the entire scan flow away from facial recognition language/visuals toward product label OCR, while preserving the glassmorphism style, blue/white palette, and Playfair/Inter typography.
+Apply changes ONLY to these two pop-ups. Other screens, modals (e.g. product detail), and the global `.glass` token remain untouched.
 
-## 1. Scanner Screen (`src/skintra/CameraScreen.tsx`)
-- Replace caption "POSITION FACE" → "POSITION PRODUCT LABEL".
-- Keep heading "Scan in progress" and the top "Scan label" badge.
-- Remove the spherical mesh "face globe" (radial gradient, ellipse meridians, rotating ring, pulse ring).
-- Add a **rectangular OCR focus frame** in its place:
-  - Tall rectangle (aspect ~3:4) with 4 corner brackets (reuse bracket styling, rounded corners).
-  - Inside: faint horizontal "ingredient lines" (3–4 light skeleton bars) suggesting a label.
-  - Animated horizontal **scan line** sweeping top → bottom (CSS animation, primary gradient, soft blur).
-  - Subtle viewfinder grid (2 vertical + 2 horizontal hairlines) for camera feel.
-- Keep the centered scan trigger button overlapping the frame's bottom-center (or place it below the frame).
-- Keep the Clarity / Light metric tiles, "AI is ready to scan…", Take Photo, Upload buttons unchanged.
+## Scope
+- `src/skintra/CameraScreen.tsx` → "Is the image clear?" modal (lines ~132–165)
+- `src/skintra/AlternativesScreen.tsx` → "Scan more items?" modal (lines ~132–154)
 
-## 2. Confirmation Modal (in `CameraScreen.tsx`)
-- Remove the inner preview tile entirely (the `glass-inner aspect-video` block containing the 🧴 emoji).
-- Keep only "Is the image clear?" title + description paragraph.
-- Vertically center the text content within the modal (flex column, `items-center text-center`, comfortable padding above the action row).
-- Keep Retake / Yes, analyze action buttons unchanged.
+## Visual spec
 
-## 3. Processing Screen (`src/skintra/ProcessingScreen.tsx`) — OCR animation
-- Replace caption "Position face" → "Position product label" (or remove and use only the heading).
-- Change heading to "Decoding ingredients".
-- Replace the spherical mesh visual with an **OCR decode animation**:
-  - Same rectangular bracketed frame as the scanner.
-  - Inside: stacked skeleton "text lines" of varying widths.
-  - Each line reveals sequentially with a typewriter / shimmer effect (staggered opacity + width animation).
-  - A primary-colored horizontal scan line continuously sweeps over the lines.
-  - Small monospace ticker at the bottom of the frame cycling sample tokens (e.g., `NIACINAMIDE · GLYCERIN · HYALURONIC ACID …`).
-- Update step copy to OCR-focused:
-  1. "Reading label text…"
-  2. "Extracting ingredient list…"
-  3. "Matching to your skin profile…"
-- Replace footer line "AI is analyzing skin layers…" → "AI is decoding ingredients…".
+**Modal container**
+- Replace `glass` (translucent grayish-blue) with a clean white panel:
+  `bg-white/90 backdrop-blur-xl border border-white/80 shadow-[0_20px_60px_-20px_hsl(218_40%_30%/0.25)]`
+- Keep the outer overlay's blur (`backdrop-blur-sm`) so the scene behind stays softly blurred.
+- Increase padding: `p-8 sm:p-10` (more breathing room).
+- Center all content (`text-center`, buttons grid stays 2-col).
 
-## 4. Verdict Screen (`src/skintra/VerdictScreen.tsx`)
-- Keep title "Today's Skintra adjustment" and product subtitle.
-- Relabel the ring's contextual meaning: change the small badge above (currently "Today's verdict") to "Product match", and add a tiny caption under the percentage: "Product match for your profile".
-- Replace the three metric pills (Hydration / Sensitivity / Barrier — which read like skin metrics) with **product properties**:
-  - Hydrating — high
-  - Soothing — medium
-  - Active intensity — 10%
-  - Use existing icons (Droplet, Snowflake/Sparkles, Sparkles/Zap from lucide-react).
-- Replace the three "adjustment" tiles (Boost / Calm / Night) with **product usage guidance**:
-  - Apply — AM + PM
-  - Pair with — moisturizer
-  - Avoid — strong acids
-- Keep the Risks & Usage collapsible, View routine + See Alternatives buttons, and the add-to-routine confirm modal as-is.
+**Typography (no italics)**
+- Titles: drop `font-display` (which is Playfair Italic). Use `font-sans font-semibold text-2xl tracking-tight` with color `text-[hsl(220_45%_18%)]` (deep navy/slate).
+- Descriptions: `text-sm font-medium text-[hsl(220_25%_35%)]` (dark slate, not muted gray) with `mt-3` and `max-w-[20rem] mx-auto`.
 
-## Technical Notes
-- New CSS keyframes in `src/index.css`: `scan-sweep` (translateY 0→100% loop) and `ocr-reveal` (width 0→100% with stagger via inline `animationDelay`). Add corresponding `.animate-scan-sweep` utility.
-- No new dependencies. Reuse `glass`, `glass-inner`, `glass-soft`, `font-display`, gradient tokens.
-- All existing navigation handlers (`onBack`, `onConfirm`, `onAdd`, `onAlternatives`, `onDone`) stay intact — pure visual + copy refactor.
+**Buttons (keep pill shape, large radius)**
+- Primary ("Yes, analyze" / "Scan more"): keep `var(--gradient-primary)` background, `text-white font-bold`, `h-12 rounded-full`, add subtle shadow `shadow-[0_8px_20px_-6px_hsl(218_60%_50%/0.45)]`.
+- Secondary ("Retake" / "Finish"): replace `glass-soft` with `bg-[hsl(214_45%_94%)] hover:bg-[hsl(214_45%_90%)] text-[hsl(220_45%_22%)] font-semibold border border-[hsl(214_35%_86%)]`.
+- Grid: `mt-8 grid grid-cols-2 gap-3`.
 
-## Out of Scope
-- Real OCR / camera APIs.
-- Changes to Splash, Dashboard, Home, Alternatives screens.
+**Camera modal specifics**
+- Reduce the empty `py-10` block to `py-6` (padding is now on the container).
+- Keep the close (X) button top-right, but recolor to `text-[hsl(220_30%_40%)]`.
+
+## Out of scope
+- Do not change the product-detail modal in `AlternativesScreen.tsx`.
+- Do not modify global `.glass`, `.glass-soft`, or `font-display` utilities.
+- No layout/flow changes elsewhere.
+
+## Result
+Two pop-ups with a crisp white surface, upright semibold navy headlines, high-contrast dark descriptions, vivid blue primary CTA, and a soft ice-blue secondary button — consistent with the requested "Modern Clarity" aesthetic.
