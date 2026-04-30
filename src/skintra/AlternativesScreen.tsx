@@ -76,7 +76,7 @@ export const AlternativesScreen = ({
         <div className="glass rounded-3xl p-5">
           <div className="flex items-center gap-2">
             <Sparkles className="w-4 h-4 text-primary" />
-            <h3 className="font-sans font-semibold text-2xl tracking-tight text-[hsl(220_45%_18%)]">Found an alternative?</h3>
+            <h3 className="font-sans font-semibold text-[20px] leading-tight tracking-tight text-[hsl(220_45%_18%)]">Found an alternative?</h3>
           </div>
           <div className="mt-4 grid grid-cols-2 gap-3">
             <button
