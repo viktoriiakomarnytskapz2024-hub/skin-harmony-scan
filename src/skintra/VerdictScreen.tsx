@@ -164,21 +164,21 @@ export const VerdictScreen = ({
 
       {confirm && (
         <div className="absolute inset-0 z-20 bg-foreground/10 backdrop-blur-sm flex items-end sm:items-center justify-center p-5 animate-fade-in">
-          <div className="w-full glass rounded-3xl p-6 animate-scale-in">
-            <h3 className="font-display text-2xl text-foreground">Add to routine?</h3>
-            <p className="text-sm text-muted-foreground mt-1">
+          <div className="w-full rounded-3xl p-8 sm:p-10 text-left bg-white/90 backdrop-blur-xl border border-white/80 shadow-[0_20px_60px_-20px_hsl(218_40%_30%/0.25)] animate-scale-in">
+            <h3 className="font-sans font-semibold text-2xl tracking-tight text-[hsl(220_45%_18%)]">Add to routine?</h3>
+            <p className="text-sm font-medium text-[hsl(220_25%_35%)] mt-3">
               {product.name} will appear in your daily routine.
             </p>
-            <div className="mt-5 grid grid-cols-2 gap-2.5">
+            <div className="mt-8 grid grid-cols-2 gap-3">
               <button
                 onClick={() => { setConfirm(false); onAlternatives(); }}
-                className="h-12 rounded-full glass-soft text-foreground font-medium"
+                className="h-12 rounded-full bg-[hsl(214_45%_94%)] hover:bg-[hsl(214_45%_90%)] text-[hsl(220_45%_22%)] font-semibold border border-[hsl(214_35%_86%)] transition-colors"
               >
                 No
               </button>
               <button
                 onClick={() => { setConfirm(false); onAdd(); }}
-                className="h-12 rounded-full text-primary-foreground font-semibold"
+                className="h-12 rounded-full text-white font-bold shadow-[0_8px_20px_-6px_hsl(218_60%_50%/0.45)]"
                 style={{ background: "var(--gradient-primary)" }}
               >
                 Yes, add

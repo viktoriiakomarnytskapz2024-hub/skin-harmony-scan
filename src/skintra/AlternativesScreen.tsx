@@ -74,7 +74,7 @@ export const AlternativesScreen = ({
         <div className="glass rounded-3xl p-5">
           <div className="flex items-center gap-2">
             <Sparkles className="w-4 h-4 text-primary" />
-            <h3 className="font-display text-lg text-foreground">Found an alternative?</h3>
+            <h3 className="font-display italic text-2xl text-foreground">Found an alternative?</h3>
           </div>
           <div className="mt-4 grid grid-cols-2 gap-2.5">
             <button
@@ -131,9 +131,9 @@ export const AlternativesScreen = ({
 
       {askScan && (
         <div className="absolute inset-0 z-20 bg-black/30 backdrop-blur-sm flex items-end sm:items-center justify-center p-5 animate-fade-in">
-          <div className="w-full rounded-3xl p-8 sm:p-10 text-center bg-white/90 backdrop-blur-xl border border-white/80 shadow-[0_20px_60px_-20px_hsl(218_40%_30%/0.25)] animate-scale-in">
+          <div className="w-full rounded-3xl p-8 sm:p-10 text-left bg-white/90 backdrop-blur-xl border border-white/80 shadow-[0_20px_60px_-20px_hsl(218_40%_30%/0.25)] animate-scale-in">
             <h3 className="font-sans font-semibold text-2xl tracking-tight text-[hsl(220_45%_18%)]">Scan more items?</h3>
-            <p className="text-sm font-medium text-[hsl(220_25%_35%)] mt-3 max-w-[20rem] mx-auto">Keep refining today's routine.</p>
+            <p className="text-sm font-medium text-[hsl(220_25%_35%)] mt-3">Keep refining today's routine.</p>
             <div className="mt-8 grid grid-cols-2 gap-3">
               <button
                 onClick={() => { setAskScan(false); onFinish(); }}
