@@ -29,7 +29,9 @@ export const AlternativesScreen = ({
         <button onClick={onBack} className="w-10 h-10 rounded-full glass flex items-center justify-center">
           <ArrowLeft className="w-4 h-4" />
         </button>
-        <p className="text-xs text-muted-foreground">Alternatives</p>
+        <span className="px-4 py-1.5 rounded-full bg-white/70 backdrop-blur-md border border-white/80 text-sm font-medium text-[hsl(220_30%_30%)]">
+          Alternatives
+        </span>
         <div className="w-10" />
       </div>
 
@@ -74,7 +76,7 @@ export const AlternativesScreen = ({
         <div className="glass rounded-3xl p-5">
           <div className="flex items-center gap-2">
             <Sparkles className="w-4 h-4 text-primary" />
-            <h3 className="font-display italic text-2xl text-foreground">Found an alternative?</h3>
+            <h3 className="font-sans font-semibold text-2xl tracking-tight text-[hsl(220_45%_18%)]">Found an alternative?</h3>
           </div>
           <div className="mt-4 grid grid-cols-2 gap-2.5">
             <button
