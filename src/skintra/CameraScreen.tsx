@@ -131,16 +131,16 @@ export const CameraScreen = ({
       {/* Confirm modal */}
       {showModal && (
         <div className="absolute inset-0 z-20 bg-foreground/10 backdrop-blur-sm flex items-end sm:items-center justify-center p-5 animate-fade-in">
-          <div className="w-full rounded-3xl p-8 sm:p-10 text-center bg-white/90 backdrop-blur-xl border border-white/80 shadow-[0_20px_60px_-20px_hsl(218_40%_30%/0.25)] animate-scale-in relative">
+          <div className="w-full rounded-3xl p-8 sm:p-10 text-left bg-white/90 backdrop-blur-xl border border-white/80 shadow-[0_20px_60px_-20px_hsl(218_40%_30%/0.25)] animate-scale-in relative">
             <button
               onClick={() => setShowModal(false)}
               className="absolute top-4 right-4 p-1 text-[hsl(220_30%_40%)] hover:text-[hsl(220_45%_18%)]"
             >
               <X className="w-4 h-4" />
             </button>
-            <div className="py-6 flex flex-col items-center text-center">
+            <div className="py-6 text-left">
               <h3 className="font-sans font-semibold text-2xl tracking-tight text-[hsl(220_45%_18%)]">Is the image clear?</h3>
-              <p className="text-sm font-medium text-[hsl(220_25%_35%)] mt-3 max-w-[20rem] mx-auto">
+              <p className="text-sm font-medium text-[hsl(220_25%_35%)] mt-3">
                 We'll analyze the ingredients list. Make sure the label is sharp and fully visible.
               </p>
             </div>

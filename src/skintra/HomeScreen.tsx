@@ -1,4 +1,4 @@
-import { Bell, Search, ScanLine, Sparkles, ArrowLeft } from "lucide-react";
+import { Search, ScanLine, ArrowLeft } from "lucide-react";
 import { Product } from "./types";
 
 const categories = ["All", "Cleanser", "Serum", "Moisturizer", "SPF", "Mask"];
@@ -21,8 +21,7 @@ export const HomeScreen = ({
         >
           <ArrowLeft className="w-4 h-4" />
         </button>
-        <div className="glass rounded-full px-3 py-1.5 text-xs font-medium text-foreground/80 flex items-center gap-1.5">
-          <Sparkles className="w-3 h-3 text-primary" />
+        <div className="glass rounded-full px-4 py-1.5 text-xs font-medium text-foreground/80 flex items-center">
           My Routine
         </div>
         <div className="w-10" />

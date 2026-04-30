@@ -75,7 +75,7 @@ export const DashboardScreen = ({
               />
               <MenuItem
                 icon={HomeIcon}
-                label="Splash"
+                label="Home"
                 onClick={() => {
                   setMenuOpen(false);
                   onOpenSplash();
@@ -132,13 +132,24 @@ export const DashboardScreen = ({
             <div className="glass-inner p-3">
               <p className="text-[11px] text-muted-foreground mb-2">0/4 Steps</p>
               <div className="grid grid-cols-2 gap-1.5">
-                {[Droplet, Sparkles, FlaskConical, Sun].map((Icon, i) => (
-                  <div
+                {[
+                  { Icon: Droplet, label: "Hydration" },
+                  { Icon: Sparkles, label: "Brightening" },
+                  { Icon: FlaskConical, label: "Treatment" },
+                  { Icon: Sun, label: "SPF Protection" },
+                ].map(({ Icon, label }, i) => (
+                  <button
                     key={i}
-                    className="aspect-square rounded-xl bg-white/70 border border-white/80 flex items-center justify-center text-foreground/70"
+                    type="button"
+                    title={label}
+                    aria-label={label}
+                    className="group relative aspect-square rounded-xl bg-white/70 border border-white/80 flex items-center justify-center text-foreground/70 hover:text-primary hover:bg-white/90 transition"
                   >
                     <Icon className="w-4 h-4" />
-                  </div>
+                    <span className="pointer-events-none absolute -bottom-7 left-1/2 -translate-x-1/2 whitespace-nowrap rounded-md bg-foreground/90 text-background text-[10px] font-medium px-2 py-0.5 opacity-0 group-hover:opacity-100 group-focus:opacity-100 transition z-10">
+                      {label}
+                    </span>
+                  </button>
                 ))}
               </div>
             </div>
