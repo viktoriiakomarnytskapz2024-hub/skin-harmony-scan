@@ -73,21 +73,21 @@ export const AlternativesScreen = ({
       </div>
 
       <div className="px-5 mt-6">
-        <div className="glass rounded-3xl p-5">
-          <div className="flex items-center gap-2">
-            <Sparkles className="w-4 h-4 text-primary" />
-            <h3 className="font-sans font-semibold text-[20px] leading-tight tracking-tight text-[hsl(220_45%_18%)]">Found an alternative?</h3>
+        <div className="glass rounded-2xl px-4 py-3 flex items-center justify-between gap-3">
+          <div className="flex items-center gap-1.5 min-w-0">
+            <Sparkles className="w-3.5 h-3.5 text-primary shrink-0" />
+            <h3 className="font-sans font-semibold text-[15px] leading-tight tracking-tight text-[hsl(220_45%_18%)] truncate">Found an alternative?</h3>
           </div>
-          <div className="mt-4 grid grid-cols-2 gap-3">
+          <div className="flex items-center gap-2 shrink-0">
             <button
               onClick={() => setAskScan(true)}
-              className="h-12 rounded-full bg-[hsl(214_45%_94%)] hover:bg-[hsl(214_45%_90%)] text-[hsl(220_45%_22%)] font-semibold border border-[hsl(214_35%_86%)] transition-colors"
+              className="h-8 px-4 rounded-full bg-[hsl(214_45%_94%)] hover:bg-[hsl(214_45%_90%)] text-[hsl(220_45%_22%)] text-xs font-semibold border border-[hsl(214_35%_86%)] transition-colors"
             >
               No
             </button>
             <button
               onClick={onFinish}
-              className="h-12 rounded-full text-white font-bold shadow-[0_8px_20px_-6px_hsl(218_60%_50%/0.45)]"
+              className="h-8 px-4 rounded-full text-white text-xs font-bold shadow-[0_6px_14px_-6px_hsl(218_60%_50%/0.45)]"
               style={{ background: "var(--gradient-primary)" }}
             >
               Yes, done
