@@ -21,14 +21,14 @@ export const HomeScreen = ({
         >
           <ArrowLeft className="w-4 h-4" />
         </button>
-        <div className="glass rounded-full px-4 py-1.5 text-xs font-medium text-foreground/80 flex items-center">
+        <span className="px-4 py-1.5 rounded-full bg-white/70 backdrop-blur-md border border-white/80 text-sm font-medium text-[hsl(220_30%_30%)]">
           My Routine
-        </div>
+        </span>
         <div className="w-10" />
       </div>
 
       <div className="px-5 mt-2 animate-slide-up">
-        <h1 className="font-display text-3xl leading-tight text-foreground mt-1">
+        <h1 className="font-display text-3xl text-foreground leading-tight mt-1">
           My Products
         </h1>
         <p className="text-sm text-muted-foreground mt-1">Everything in your current routine.</p>

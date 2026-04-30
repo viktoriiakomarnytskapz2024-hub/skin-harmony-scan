@@ -33,9 +33,9 @@ export const VerdictScreen = ({
         <button onClick={onBack} className="w-10 h-10 rounded-full glass flex items-center justify-center text-foreground/70">
           <ArrowLeft className="w-4 h-4" />
         </button>
-        <div className="glass rounded-full px-3 py-1.5 text-xs font-medium text-foreground/80">
+        <span className="px-4 py-1.5 rounded-full bg-white/70 backdrop-blur-md border border-white/80 text-sm font-medium text-[hsl(220_30%_30%)]">
           Product match
-        </div>
+        </span>
         <div className="w-10" />
       </div>
 
