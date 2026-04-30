@@ -90,7 +90,7 @@ export const ProcessingScreen = ({ onDone }: { onDone: () => void }) => {
         ))}
       </div>
 
-      <p className="text-xs text-muted-foreground mt-6 italic">AI is decoding ingredients…</p>
+      <p className="text-xs text-muted-foreground mt-6">AI is decoding ingredients…</p>
     </div>
   );
 };
