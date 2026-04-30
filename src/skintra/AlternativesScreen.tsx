@@ -35,8 +35,8 @@ export const AlternativesScreen = ({
         <div className="w-10" />
       </div>
 
-      <div className="px-6 mt-3 animate-fade-in">
-        <h1 className="font-display text-3xl text-foreground leading-tight">
+      <div className="px-5 mt-3 animate-fade-in">
+        <h1 className="font-display text-3xl text-foreground leading-tight mt-1">
           Better matches<br />for you
         </h1>
         <p className="text-sm text-muted-foreground mt-1">
@@ -78,37 +78,36 @@ export const AlternativesScreen = ({
             <Sparkles className="w-4 h-4 text-primary" />
             <h3 className="font-sans font-semibold text-2xl tracking-tight text-[hsl(220_45%_18%)]">Found an alternative?</h3>
           </div>
-          <div className="mt-4 grid grid-cols-2 gap-2.5">
+          <div className="mt-4 grid grid-cols-2 gap-3">
+            <button
+              onClick={() => setAskScan(true)}
+              className="h-12 rounded-full bg-[hsl(214_45%_94%)] hover:bg-[hsl(214_45%_90%)] text-[hsl(220_45%_22%)] font-semibold border border-[hsl(214_35%_86%)] transition-colors"
+            >
+              No
+            </button>
             <button
               onClick={onFinish}
-              className="h-12 rounded-full text-primary-foreground font-semibold"
+              className="h-12 rounded-full text-white font-bold shadow-[0_8px_20px_-6px_hsl(218_60%_50%/0.45)]"
               style={{ background: "var(--gradient-primary)" }}
             >
               Yes, done
-            </button>
-            <button
-              onClick={() => setAskScan(true)}
-              className="h-12 rounded-full glass-soft text-foreground font-medium"
-            >
-              No
             </button>
           </div>
         </div>
       </div>
 
       {selected && (
-        <div className="absolute inset-0 z-20 bg-black/30 backdrop-blur-sm flex items-end sm:items-center justify-center p-5 animate-fade-in">
-          <div className="w-full glass rounded-3xl p-6 animate-scale-in">
-            <div className="flex items-start justify-between">
-              <div>
-                <h3 className="font-display text-2xl text-foreground">{selected.name}</h3>
-                <p className="text-sm text-muted-foreground">{selected.brand} · {selected.category}</p>
-              </div>
-              <button onClick={() => setSelected(null)} className="p-1 text-muted-foreground">
-                <X className="w-4 h-4" />
-              </button>
-            </div>
-            <div className="mt-4 aspect-video rounded-2xl bg-gradient-to-br from-primary/10 to-accent/15 flex items-center justify-center text-5xl">
+        <div className="absolute inset-0 z-20 bg-foreground/10 backdrop-blur-sm flex items-end sm:items-center justify-center p-5 animate-fade-in">
+          <div className="w-full rounded-3xl p-8 sm:p-10 text-left bg-white/90 backdrop-blur-xl border border-white/80 shadow-[0_20px_60px_-20px_hsl(218_40%_30%/0.25)] animate-scale-in relative">
+            <button
+              onClick={() => setSelected(null)}
+              className="absolute top-4 right-4 p-1 text-[hsl(220_30%_40%)] hover:text-[hsl(220_45%_18%)]"
+            >
+              <X className="w-4 h-4" />
+            </button>
+            <h3 className="font-sans font-semibold text-2xl tracking-tight text-[hsl(220_45%_18%)]">{selected.name}</h3>
+            <p className="text-sm font-medium text-[hsl(220_25%_35%)] mt-1">{selected.brand} · {selected.category}</p>
+            <div className="mt-5 aspect-video rounded-2xl bg-gradient-to-br from-primary/10 to-accent/15 flex items-center justify-center text-5xl">
               {selected.emoji}
             </div>
             <div className="mt-3 flex gap-1.5 flex-wrap">
@@ -117,12 +116,12 @@ export const AlternativesScreen = ({
               ))}
               <span className="text-[10px] px-2 py-0.5 rounded-full bg-success/15 text-success font-bold">{selected.match}% Match</span>
             </div>
-            <p className="text-xs text-muted-foreground mt-3 leading-relaxed">
+            <p className="text-sm font-medium text-[hsl(220_25%_35%)] mt-4 leading-relaxed">
               A great fit for tonight: supports barrier recovery while you sleep and balances oil with cycle-aware actives.
             </p>
             <button
               onClick={() => { onAdd(selected); setSelected(null); }}
-              className="mt-5 w-full h-12 rounded-full text-primary-foreground font-semibold"
+              className="mt-6 w-full h-12 rounded-full text-white font-bold shadow-[0_8px_20px_-6px_hsl(218_60%_50%/0.45)]"
               style={{ background: "var(--gradient-primary)" }}
             >
               Add to Routine
